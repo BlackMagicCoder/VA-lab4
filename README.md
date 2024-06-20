@@ -4,8 +4,8 @@ Mögliche Punktzahl: 20 Punkte
 
 ## Deadlines
 
-- 1. Zug: 25.1.2024
-- 2. Zug: 23.1.2024 
+- 1. Zug: 11.7.2024
+- 2. Zug: 11.7.2024 
 
 ## Aufgabenstellung
 In dieser Aufgabe erhalten Sie kein vollständig vorkonfiguriertes Project; 
@@ -118,9 +118,9 @@ The application can be packaged using:
 ```shell script
 $ mvn package
 ```
-It produces the `verteilte-anwendungen-kafka-1.0.0-SNAPSHOT-runner.jar` file in the `target/` directory.
+It produces the `verteilte-anwendung-runner.jar` file in the `target/` directory.
 
 The primary application instance is now runnable using 
-`$ java  -Dquarkus.profile=primary -jar target/verteilte-anwendungen-kafka-1.0.0-SNAPSHOT-runner.jar`
+`$ java  -Dquarkus.profile=primary -jar target/verteilte-anwendung-runner.jar`
 and the secondary by using
-`$ java  -Dquarkus.profile=secondary -jar target/verteilte-anwendungen-kafka-1.0.0-SNAPSHOT-runner.jar`.
+`$ java  -Dquarkus.profile=secondary -jar target/verteilte-anwendung-runner.jar`.
