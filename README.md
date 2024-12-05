@@ -4,8 +4,8 @@ Mögliche Punktzahl: 20 Punkte
 
 ## Deadlines
 
-- 1. Zug: 11.7.2024
-- 2. Zug: 11.7.2024 
+- 1. Zug: 16.1.2025
+- 2. Zug: 16.1.2025 
 
 ## Aufgabenstellung
 In dieser Aufgabe erhalten Sie kein vollständig vorkonfiguriertes Project; 
