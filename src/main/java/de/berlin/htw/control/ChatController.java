@@ -5,23 +5,23 @@ import jakarta.inject.Inject;
 
 import org.jboss.logging.Logger;
 
-import de.berlin.htw.boundary.TwitterProducer;
+import de.berlin.htw.boundary.MessageProducer;
 import io.quarkus.scheduler.Scheduled;
 
 /**
  * @author Alexander Stanik [alexander.stanik@htw-berlin.de]
  */
 @Dependent
-public class TweetController {
+public class ChatController {
 	
 	@Inject
 	Logger logger;
 
 	@Inject
-	TweetGenerator generator;
+	MessageGenerator generator;
 	
 	@Inject
-	TwitterProducer producer;
+	MessageProducer producer;
 	
     public String getTweet() {
         final String tweet = generator.generateTweet();

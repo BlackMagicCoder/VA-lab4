@@ -4,8 +4,8 @@ Mögliche Punktzahl: 20 Punkte
 
 ## Deadlines
 
-- 1. Zug: 16.1.2025
-- 2. Zug: 16.1.2025 
+- 1. Zug: 9.7.2025
+- 2. Zug: 8.7.2025 
 
 ## Aufgabenstellung
 In dieser Aufgabe erhalten Sie kein vollständig vorkonfiguriertes Project; 
@@ -13,29 +13,27 @@ dafür jedoch ein existierendes Docker Compose File.
 Dieses Docker Compose File fährt bereits alle benötigten Komponenten für Sie hoch.
 Um sich einen Überblick über die Server-Instanzen zu verschaffen, empfiehlt es sich einen Blick in die [docker-compose.yml](docker-compose.yml) zu werfen.
 
-> Lassen Sie Elon Mask zum Zittern bringen,
- in dem Sie ihre Applikation zum Twittern zwingen.
-
-Genaugenommen können Sie bereits mit dieser Applikation 
-auf Tweets zugreifen und sich die neusten 
+Mit dieser Applikation können Sie
+auf ein Chat zugreifen und sich die neusten 
 Nachrichten anzeigen lassen. Hierzu müssen sie lediglich 
 ihre Applikation starten, um anschließend auf den 
-VA Twitter Channel unter [http://localhost:8081](http://localhost:8081)
+VA LinkedIn Channel unter [http://localhost:8081](http://localhost:8081)
 zugreifen zu können.
 Leider sind diese Informationen nur generiert und auch nur lokal 
 auf einer Instanz verfügbar.
-Das Ziel dieser Aufgabe ist die Bereitstellung der Tweets auf zwei Instanzen.
-Die Herausforderung besteht somit darin, die Tweets nach Kafka zu schreiben bzw. aus Kafka zu lesen und somit auf allen Instanzen ihrer Applikation 
+Das Ziel dieser Aufgabe ist die Bereitstellung der LinkedIn Nachrichten auf zwei oder mehr Instanzen.
+Die Herausforderung besteht somit darin, die Nachrichten nach Kafka zu schreiben bzw. 
+aus Kafka zu lesen und somit auf allen Instanzen ihrer Applikation 
 gleichermaßen darzustellen.
 
-1.  **(4P)** Konfigurieren Sie ein Kafka Topic namens "twitter".
+1.  **(4P)** Konfigurieren Sie ein Kafka Topic namens "chat".
 Dieses Topic muss mindestens **zwei** Partitionen besitzen!
 Entscheiden Sie sich für eine geeignete Retention und begründen Sie Ihre
 Entscheidung bei der Projektabgabe.
 Konfigurieren Sie das von Ihnen erzeugte Topic in der
 [application.properties](src/main/resources/application.properties).
 2.  **(6P)** Implementieren Sie die Consumer und Producer Funktionalität
-für das Erzeugen und Verarbeiten von Tweets.
+für das Erzeugen und Verarbeiten von Nachrichten.
 Da es sich hierbei um eine Schnittstelle ihrer Applikation handelt,
 sollten sich auch die entsprechenden Klassen im 
 [Boundary Package](src/main/java/de/berlin/htw/boundary)

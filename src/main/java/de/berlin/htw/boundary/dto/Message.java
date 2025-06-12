@@ -3,11 +3,11 @@ package de.berlin.htw.boundary.dto;
 /**
  * @author Alexander Stanik [alexander.stanik@htw-berlin.de]
  */
-public class Tweet {
+public class Message {
 
     private String author;
     
-    private String message;
+    private String content;
 
     public String getAuthor() {
         return author;
@@ -17,12 +17,12 @@ public class Tweet {
         this.author = author;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContent(String content) {
+        this.content = content;
     }
 
 }

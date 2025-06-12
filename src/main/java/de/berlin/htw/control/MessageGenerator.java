@@ -19,7 +19,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
  * @author Alexander Stanik [alexander.stanik@htw-berlin.de]
  */
 @ApplicationScoped
-public class TweetGenerator {
+public class MessageGenerator {
 	
 	@ConfigProperty(name = "htw.tweet.subject-filename")
 	String subjectFilename;

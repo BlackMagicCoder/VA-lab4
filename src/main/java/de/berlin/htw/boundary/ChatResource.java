@@ -16,25 +16,25 @@ import jakarta.ws.rs.sse.SseEventSink;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import de.berlin.htw.control.TweetController;
+import de.berlin.htw.control.ChatController;
 
 /**
  * @author Alexander Stanik [alexander.stanik@htw-berlin.de]
  */
 @Path("/tweets")
-public class TwitterResource {
+public class ChatResource {
 
-    @ConfigProperty(name = "htw.tweet.history-size", defaultValue = "10")
+    @ConfigProperty(name = "htw.chat.history-size", defaultValue = "10")
     Integer historySize;
 
     @Context
     Sse sse;
 
     @Inject
-    TweetController controller;
+    ChatController controller;
 
     @Inject
-    TwitterConsumer consumer;
+    MessageConsumer consumer;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

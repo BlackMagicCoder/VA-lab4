@@ -7,33 +7,33 @@ import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.event.ObservesAsync;
 import jakarta.inject.Singleton;
 
-import de.berlin.htw.boundary.dto.Tweet;
+import de.berlin.htw.boundary.dto.Message;
 
 /**
  * @author Alexander Stanik [alexander.stanik@htw-berlin.de]
  */
 @Singleton
-public class TwitterConsumer {
+public class MessageConsumer {
 
-    BlockingQueue<Tweet> queue = new LinkedBlockingQueue<>(50);
+    BlockingQueue<Message> queue = new LinkedBlockingQueue<>(50);
 
-    public void onEvent(@Observes final Tweet tweet) {
+    public void onEvent(@Observes final Message message) {
         try {
-            queue.put(tweet);
+            queue.put(message);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
     
-    public void onAsyncEvent(@ObservesAsync final Tweet tweet) {
+    public void onAsyncEvent(@ObservesAsync final Message message) {
         try {
-            queue.put(tweet);
+            queue.put(message);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
     
     public String get() throws InterruptedException {
-        return queue.take().getMessage();
+        return queue.take().getContent();
     }
 }
