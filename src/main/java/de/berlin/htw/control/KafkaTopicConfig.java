@@ -1,20 +1,19 @@
 package de.berlin.htw.control;
 
 import io.quarkus.runtime.StartupEvent;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-/**
- * @author Cedrik Tailleur [cedrik.tailleur@htw-berlin.de]
- */
 @ApplicationScoped
 public class KafkaTopicConfig {
 
@@ -23,18 +22,29 @@ public class KafkaTopicConfig {
     // Definiert den Namen des Fibonacci-Topics
     public static final String FIBONACCI_TOPIC = "fibonacci";
 
+    @ConfigProperty(name = "quarkus.profile")
+    String activeProfile;
+
     // Erstellt die Kafka-Topics beim Start der Anwendung
     void onStart(@Observes StartupEvent ev) throws ExecutionException, InterruptedException {
+        // Bestimmt den Replikationsfaktor basierend auf dem aktiven Profil
+        short replicationFactor = (short) ("test".equals(activeProfile) ? 1 : 3);
+
         try (AdminClient adminClient = AdminClient.create(kafkaProps())) {
-            // Überprüft, ob die Topics bereits existieren
             Set<String> existingTopics = adminClient.listTopics().names().get();
+            List<NewTopic> newTopics = new ArrayList<>();
+
             if (!existingTopics.contains(CHAT_TOPIC)) {
-                // Erstellt das Chat-Topic mit 2 Partitionen und einer Replication von 1
-                adminClient.createTopics(Collections.singletonList(new NewTopic(CHAT_TOPIC, 2, (short) 1))).all().get();
+                // Chat-Topic: 2 Partitionen, dynamischer Replikationsfaktor
+                newTopics.add(new NewTopic(CHAT_TOPIC, 2, replicationFactor));
             }
             if (!existingTopics.contains(FIBONACCI_TOPIC)) {
-                // Erstellt das Fibonacci-Topic mit 1 Partition und einer Replication von 1
-                adminClient.createTopics(Collections.singletonList(new NewTopic(FIBONACCI_TOPIC, 1, (short) 1))).all().get();
+                // Fibonacci-Topic: 1 Partition, dynamischer Replikationsfaktor
+                newTopics.add(new NewTopic(FIBONACCI_TOPIC, 1, replicationFactor));
+            }
+
+            if (!newTopics.isEmpty()) {
+                adminClient.createTopics(newTopics).all().get();
             }
         }
     }

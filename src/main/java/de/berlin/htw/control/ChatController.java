@@ -1,17 +1,17 @@
 package de.berlin.htw.control;
 
-import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import org.jboss.logging.Logger;
-
-import de.berlin.htw.boundary.MessageProducer;
 import io.quarkus.scheduler.Scheduled;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 /**
  * @author Alexander Stanik [alexander.stanik@htw-berlin.de]
  */
-@Dependent
+@ApplicationScoped
 public class ChatController {
 	
 	@Inject
@@ -21,7 +21,8 @@ public class ChatController {
 	MessageGenerator generator;
 	
 	@Inject
-	MessageProducer producer;
+	@Channel("chat-producer")
+	Emitter<String> kafkaEmitter;
 	
     public String getTweet() {
         final String tweet = generator.generateTweet();
@@ -32,8 +33,8 @@ public class ChatController {
     @Scheduled(every="10s")     
     void produceTweet() {
         final String tweet = this.getTweet();
-        // TODO: send the tweet to kafka
-        producer.sendMessage(tweet);
+        // sendet die Nachricht an Kafka
+        kafkaEmitter.send(tweet);
     }
 
 }
