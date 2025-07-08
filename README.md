@@ -118,11 +118,11 @@ dann besuchen Sie bitte die Quarkus Webseite:
 Sie können die primäre Instanz Ihrer Applikation mit dem folgenden Kommando
 im dev Mode starten:
 ```shell script
-$ mvn compile quarkus:dev "-Dquarkus.profile=+primary"
+mvn compile quarkus:dev -D"quarkus.http.port=8081" -D"quarkus.profile=primary"
 ```
 
 ```shell script
-$ mvn compile quarkus:dev -Dquarkus.profile=+secondary
+mvn compile quarkus:dev -D"quarkus.http.port=8082" -D"quarkus.profile=secondary"
 ```
 
 > **_Achtung:_**  Quarkus wird im dev Mode mit einer Dev UI ausgeliefert,
