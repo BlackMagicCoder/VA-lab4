@@ -26,8 +26,4 @@ public class MessageProducer {
         twitterChannel.fire(message);
     }
     
-    public void sendTweetAsync(final Message message) {
-        twitterChannel.fireAsync(message);
-    }
-    
 }
