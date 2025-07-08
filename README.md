@@ -68,6 +68,25 @@ Hilfreiche Informationen zur Konfiguration des Kafka Clients
 finden sie auf der SmallRye Webseite:
 [Incoming Attributes of the Kafka Connector](https://smallrye.io/smallrye-reactive-messaging/smallrye-reactive-messaging/3.1/kafka/kafka.html#_configuration_reference) 
 
+# Konfigurationsbegründungen
+
+## Chat-Topic Konfiguration
+- **Partitionen**: 2
+  - Begründung: Zwei Partitionen ermöglichen eine bessere Lastverteilung zwischen den Consumern, während die Komplexität durch zu viele Partitionen vermieden wird.
+  
+- **Retention**: 7 Tage (604800000 ms)
+  - Begründung: Chat-Nachrichten haben einen gewissen historischen Wert, aber nach einer Woche sind sie in der Regel nicht mehr relevant. Dies verhindert auch, dass das Topic unbegrenzt wächst.
+
+## Fibonacci-Topic Konfiguration
+- **Partitionen**: 1
+  - Begründung: Da die Reihenfolge der Nachrichten für die korrekte Berechnung der Fibonacci-Folge kritisch ist, wird nur eine einzelne Partition verwendet. Dies stellt sicher, dass alle Nachrichten in der richtigen Reihenfolge verarbeitet werden.
+  
+- **Replikate**: 3
+  - Begründung: Drei Replikate bieten eine gute Balance zwischen Verfügbarkeit und Speicherverbrauch. Diese Konfiguration ermöglicht den Ausfall von bis zu zwei Brokern, ohne dass Daten verloren gehen oder die Verfügbarkeit beeinträchtigt wird.
+  
+- **Retention**: 1 Stunde (3600000 ms)
+  - Begründung: Da die Fibonacci-Berechnung eine kontinuierliche Kette ist und alte Berechnungsschritte nicht mehr benötigt werden, ist eine kurze Retention-Zeit ausreichend. Dies verhindert auch, dass das Topic unbegrenzt wächst.
+
 # Kafka Get Started
 
 Da es leider für [Apache Kafka](https://kafka.apache.org/) kein
@@ -99,11 +118,11 @@ dann besuchen Sie bitte die Quarkus Webseite:
 Sie können die primäre Instanz Ihrer Applikation mit dem folgenden Kommando
 im dev Mode starten:
 ```shell script
-$ mvn compile quarkus:dev -Dquarkus.profile=primary
+$ mvn compile quarkus:dev "-Dquarkus.profile=+primary"
 ```
-Und die sekundäre Instanz Ihrer Applikation mit:
+
 ```shell script
-$ mvn compile quarkus:dev -Dquarkus.profile=secondary
+$ mvn compile quarkus:dev -Dquarkus.profile=+secondary
 ```
 
 > **_Achtung:_**  Quarkus wird im dev Mode mit einer Dev UI ausgeliefert,
@@ -119,6 +138,9 @@ $ mvn package
 It produces the `verteilte-anwendung-runner.jar` file in the `target/` directory.
 
 The primary application instance is now runnable using 
-`$ java  -Dquarkus.profile=primary -jar target/verteilte-anwendung-runner.jar`
+`$ java  -Dquarkus.profile=primary -jar target/verteilte-anwendung-runner.jar`wh
 and the secondary by using
 `$ java  -Dquarkus.profile=secondary -jar target/verteilte-anwendung-runner.jar`.
+
+mvn compile quarkus:dev -D"quarkus.http.port=8081" -D"quarkus.profile=primary"
+mvn compile quarkus:dev -D"quarkus.http.port=8082" -D"quarkus.profile=secondary"
